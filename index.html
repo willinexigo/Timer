@@ -128,7 +128,7 @@ body{
     opacity:.8;
 }
 
-/* fireworks canvas */
+/* fireworks */
 canvas{
     position:fixed;
     top:0;
@@ -138,7 +138,7 @@ canvas{
     pointer-events:none;
 }
 
-/* hidden test button */
+/* hidden test */
 .testBtn{
     position:fixed;
     bottom:10px;
@@ -161,7 +161,6 @@ canvas{
 
 <div class="watermark">🗼</div>
 
-<!-- hidden test trigger -->
 <div class="testBtn" id="testBtn"></div>
 
 <canvas id="fireworks"></canvas>
@@ -170,7 +169,7 @@ canvas{
 
     <div class="title">VOYAGE FRANCE 2026</div>
 
-    <div class="subtitle">June 20, 2026 • 11:59 PM</div>
+    <div class="subtitle">June 20, 2026 • 23:00 (11 PM sharp)</div>
 
     <div class="countdown">
 
@@ -267,7 +266,7 @@ function startFireworks(){
     animate();
 }
 
-/* ================= HIDDEN TEST ================= */
+/* ================= TEST BUTTON ================= */
 document.addEventListener("keydown",(e)=>{
     if(e.key.toLowerCase() === "t"){
         startFireworks();
@@ -280,4 +279,3 @@ document.getElementById("testBtn").addEventListener("click", startFireworks);
 
 </body>
 </html>
-
