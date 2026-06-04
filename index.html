@@ -128,7 +128,7 @@ body{
     opacity:.8;
 }
 
-/* fireworks */
+/* canvas */
 canvas{
     position:fixed;
     top:0;
@@ -138,17 +138,6 @@ canvas{
     pointer-events:none;
 }
 
-/* hidden test */
-.testBtn{
-    position:fixed;
-    bottom:10px;
-    right:10px;
-    opacity:0;
-    width:20px;
-    height:20px;
-}
-
-/* mobile */
 @media(max-width:800px){
     .title{font-size:3rem;}
     .box{width:130px;height:130px;}
@@ -161,15 +150,13 @@ canvas{
 
 <div class="watermark">🗼</div>
 
-<div class="testBtn" id="testBtn"></div>
-
 <canvas id="fireworks"></canvas>
 
 <div class="container">
 
     <div class="title">VOYAGE FRANCE 2026</div>
 
-    <div class="subtitle">June 20, 2026 • 23:00 (11 PM sharp)</div>
+    <div class="subtitle">June 20, 2026 • 23:00</div>
 
     <div class="countdown">
 
@@ -184,7 +171,7 @@ canvas{
 
 <script>
 
-/* ================= COUNTDOWN ================= */
+/* COUNTDOWN */
 const targetDate = new Date("June 20, 2026 23:00:00").getTime();
 
 let fireworksStarted = false;
@@ -198,10 +185,7 @@ function updateCountdown(){
         startFireworks();
 
         document.body.innerHTML = `
-        <div style="
-        font-size:5rem;
-        font-weight:900;
-        text-align:center;">
+        <div style="font-size:5rem;font-weight:900;text-align:center;">
         BON VOYAGE 🇫🇷
         </div>`;
         return;
@@ -216,7 +200,7 @@ function updateCountdown(){
 setInterval(updateCountdown,1000);
 updateCountdown();
 
-/* ================= FIREWORKS ================= */
+/* FIREWORKS */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -265,15 +249,6 @@ function startFireworks(){
 
     animate();
 }
-
-/* ================= TEST BUTTON ================= */
-document.addEventListener("keydown",(e)=>{
-    if(e.key.toLowerCase() === "t"){
-        startFireworks();
-    }
-});
-
-document.getElementById("testBtn").addEventListener("click", startFireworks);
 
 </script>
 
