@@ -21,9 +21,39 @@ canvas{position:fixed;inset:0;pointer-events:none}
 <div class=box><div class=number id=seconds>0</div><div class=label>Seconds</div></div>
 </div></div>
 <script>
-const t=new Date("September 19, 2026 20:30:00").getTime();
-function showFinished(){document.body.innerHTML='<canvas id=c></canvas><div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;font-family:Arial,sans-serif;color:white;text-align:center;padding:20px;z-index:2"><div style="font-size:clamp(2.5rem,7vw,5rem);font-weight:900;text-shadow:0 6px 20px rgba(0,0,0,.3)">VÉHICULE OBTENU!</div><img src="https://cdn.dealrimages.com/QN%2FIT%2FKK%2FYL98WAL2GHBVRK.jpg?h=500" alt="White 2014 Mitsubishi Mirage" style="width:min(650px,90vw);max-height:55vh;object-fit:contain;border-radius:25px;box-shadow:0 15px 50px rgba(0,0,0,.35);background:rgba(255,255,255,.12)"><div style="font-size:1.5rem;font-weight:700">2014 Mitsubishi Mirage</div></div>';}
-function u(){let d=t-Date.now();if(d<=0){showFinished();return;}days.textContent=Math.floor(d/86400000);hours.textContent=Math.floor(d/3600000)%24;minutes.textContent=Math.floor(d/60000)%60;seconds.textContent=Math.floor(d/1000)%60;}
-document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='t')showFinished();});
-setInterval(u,1000);u();
+const firstTarget=new Date("September 19, 2026 20:30:00").getTime();
+const secondTarget=new Date("September 15, 2027 00:00:00").getTime();
+const delay=48*60*60*1000;
+let phase=1;
+let secondStart=null;
+
+function showFinished(){
+ document.body.innerHTML='<canvas id=c></canvas><div style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;font-family:Arial,sans-serif;color:white;text-align:center;padding:20px;z-index:2"><div style="font-size:clamp(2.5rem,7vw,5rem);font-weight:900;text-shadow:0 6px 20px rgba(0,0,0,.3)">VÉHICULE OBTENU!</div><img src="https://cdn.dealrimages.com/QN%2FIT%2FKK%2FYL98WAL2GHBVRK.jpg?h=500" alt="White 2014 Mitsubishi Mirage" style="width:min(650px,90vw);max-height:55vh;object-fit:contain;border-radius:25px;box-shadow:0 15px 50px rgba(0,0,0,.35);background:rgba(255,255,255,.12)"><div style="font-size:1.5rem;font-weight:700">2014 Mitsubishi Mirage</div></div>';
+}
+
+function showProbationary(){
+ document.body.innerHTML='<canvas id=c></canvas><div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font:900 clamp(2.5rem,7vw,5rem) Arial;color:white;text-align:center;padding:20px;text-shadow:0 6px 20px rgba(0,0,0,.3)">PERMIS PROBATOIRE OBTENU!</div>';
+}
+
+function update(){
+ const now=Date.now();
+ if(phase===1){
+  let d=firstTarget-now;
+  if(d<=0){showFinished();phase=2;secondStart=firstTarget+delay;return;}
+  days.textContent=Math.floor(d/86400000);hours.textContent=Math.floor(d/3600000)%24;minutes.textContent=Math.floor(d/60000)%60;seconds.textContent=Math.floor(d/1000)%60;
+ } else {
+  let d=secondTarget-now;
+  if(now<secondStart){
+   d=secondStart-now;
+   days.textContent=Math.floor(d/86400000);hours.textContent=Math.floor(d/3600000)%24;minutes.textContent=Math.floor(d/60000)%60;seconds.textContent=Math.floor(d/1000)%60;
+  } else if(d<=0){showProbationary();clearInterval(timer);return;}
+  else {
+   days.textContent=Math.floor(d/86400000);hours.textContent=Math.floor(d/3600000)%24;minutes.textContent=Math.floor(d/60000)%60;seconds.textContent=Math.floor(d/1000)%60;
+  }
+ }
+}
+
+document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='t'){showFinished();phase=2;secondStart=Date.now()+delay;}});
+const timer=setInterval(update,1000);
+update();
 </script></body></html>
